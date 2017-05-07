@@ -6,7 +6,7 @@ module.exports = function (server) {
 
     const onlineClientQueue = {
         queue: [],
-        add (client) {
+        add: function (client) {
             let has = false
             this.queue.map((c, i) => {
                 if (c.id === client.id) {
@@ -20,7 +20,7 @@ module.exports = function (server) {
                 system: client.system
             })
         },
-        remove (client) {
+        remove: function (client) {
             this.queue.map((c, i) => {
                 if (c === client || c.id === client.id) {
                     this.queue.splice(i, 1)
