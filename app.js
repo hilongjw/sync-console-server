@@ -8,8 +8,9 @@ const app = express()
 const router = express.Router()
 const server = http.createServer(app)
 
-const adminToken = require('./server/token-service')
-const socketService = require('./server/socket-service')
+const adminToken = require('./server/service/token-service')
+const socketService = require('./server/service/socket-service')
+const indexRouter = require('./server/routers/index')
 
 function checkToken (token) {
     if (!token || !adminToken.check(token)) return true
@@ -29,9 +30,13 @@ router.get('/api/token/gen', (req, res) => {
     })
 })
 
-router.get('/', (req, res) => {
-    res.send('sync-console-server')
-})
+// router.get('/', (req, res) => {
+//     res.send('sync-console-server')
+// })
+
+// router mount
+const routerMount = require('./server/mount')
+routerMount(router, path.resolve(__dirname, 'server/routers'))
 
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
@@ -42,7 +47,7 @@ app.all('*', function (req, res, next) {
 })
 
 app.use(router)
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.resolve(__dirname, 'static')))
 
 server.listen(PORT, function () {
     console.log('App is now running on port ' + PORT + '!')

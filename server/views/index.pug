@@ -1,0 +1,13 @@
+doctype html
+html(
+    lang="zh-CN"
+)
+    head
+        meta(charset="utf-8")
+        meta(name="renderer", content="webkit")
+        title= title
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no")
+    body
+        div#app
+        script(src='http://sync.bood.in/client/trace.js')
+        script(src='/client/' + bundle + '.js')
