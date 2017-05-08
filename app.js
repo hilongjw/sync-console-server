@@ -1,11 +1,30 @@
-'use strict'
 const http = require('http')
 const express = require('express')
 const path = require('path')
 
+const NODE_ENV = process.env.NODE_ENV || 'production'
+const PORT = NODE_ENV === 'development' ? 9999 : 80
 const app = express()
-const PORT = 6666
+const router = express.Router()
 const server = http.createServer(app)
+
+const adminToken = {
+    keys: {},
+    alive: 1000 * 60 * 15,
+    check: function (token) {
+        return this.keys[token]
+    },
+    add: function () {
+        const token = getUniqueId()
+        this.keys[token] = true
+
+        setTimeout(() => {
+            this.keys[token] = undefined
+        }, this.alive)
+
+        return token
+    }
+}
 
 function socketServicefunction (server) {
     const SocketIO = require('socket.io')(server)
@@ -38,11 +57,6 @@ function socketServicefunction (server) {
             })
             console.log('removed', this.queue.length)
         }
-    }
-
-    function checkToken (token) {
-        if (!token || token !== 'token') return true
-        return false
     }
 
     syncConsole.on('connection', function (socket) {
@@ -96,6 +110,33 @@ function socketServicefunction (server) {
 
 socketServicefunction(server)
 
+function getUniqueId() {
+    let id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16 | 0
+        let v = c === 'x' ? r : (r & 0x3 | 0x8)
+        return v.toString(16)
+    })
+    return id
+}
+
+function checkToken (token) {
+    if (!token || !adminToken.check(token)) return true
+    return false
+}
+
+router.get('/api/token/gen', (req, res) => {
+    if (req.query.auth !== 'awe') return res.status(400).send({ message: 'invalid auth key' })
+
+    res.send({
+        token: adminToken.add()
+    })
+})
+
+router.get('/', (req, res) => {
+    res.send('sync-console-server')
+})
+
+app.use(router)
 app.use(express.static(path.join(__dirname, 'static')))
 
 server.listen(PORT, function () {
