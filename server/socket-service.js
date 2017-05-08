@@ -1,3 +1,5 @@
+'use strict'
+
 class clientQueue {
     constructor ({ server }) {
         this.queue = [],
@@ -31,7 +33,7 @@ class clientQueue {
     }
 }
 
-module.exports = function socketService (server) {
+module.exports = function socketService ({ server, checkToken }) {
     const SocketIO = require('socket.io')(server)
     const syncConsole = SocketIO.of('/sync-console')
 

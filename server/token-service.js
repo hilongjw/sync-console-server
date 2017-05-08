@@ -1,3 +1,5 @@
+'use strict'
+
 const adminToken = {
     keys: {},
     alive: 1000 * 60 * 15,
