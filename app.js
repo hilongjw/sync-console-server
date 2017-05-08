@@ -26,44 +26,61 @@ const adminToken = {
     }
 }
 
+class clientQueue {
+    constructor ({ server }) {
+        this.queue = [],
+        this.server = server
+    }
+
+    add (item) {
+        for (let i = 0, len = this.queue.length; i < len; i++) {
+            if (this.queue[i].id === item.id) {
+                return console.log('not add-client')
+            }
+        }
+
+        this.queue.push(item)
+        console.log('add-client')
+    }
+
+    remove (id) {
+        for (let i = 0, len = this.queue.length; i < len; i++) {
+            if (id === this.queue[i].id) {
+                return this.queue.splice(i, 1)
+            }
+        }
+        console.log('remove-client', this.queue.length)
+    }
+
+    notifyAll (key, value) {
+        this.queue.map(item => {
+            this.server.to(item.id).emit(key, value)
+        })
+    }
+}
+
 function socketServicefunction (server) {
     const SocketIO = require('socket.io')(server)
     const syncConsole = SocketIO.of('/sync-console')
 
-    const onlineClientQueue = {
-        queue: [],
-        add: function (client) {
-            let has = false
-            this.queue.map((c, i) => {
-                if (c.id === client.id) {
-                    has = true
-                }
-            })
-            if (!has) this.queue.push(client)
-            console.log('admin:add-client')
-            syncConsole.emit('admin:add-client', {
-                id: client.id,
-                system: client.system
-            })
-        },
-        remove: function (client) {
-            this.queue.map((c, i) => {
-                if (c === client || c.id === client.id) {
-                    this.queue.splice(i, 1)
-                }
-            })
-            syncConsole.emit('admin:remove-client', {
-                id: client.id
-            })
-            console.log('removed', this.queue.length)
-        }
-    }
+    const onlineClientQueue = new clientQueue({
+        server: syncConsole
+    })
+    const onlineAdminQueue = new clientQueue({
+        server: syncConsole
+    })
 
     syncConsole.on('connection', function (socket) {
         socket.on('client:init', data => {
             onlineClientQueue.add({
                 id: socket.id,
-                system: data.system
+                system: data.system,
+                project: data.project
+            })
+            onlineAdminQueue.notifyAll('admin:add-client', {
+                id: socket.id,
+                system: data.system,
+                project: data.data
             })
         })
 
@@ -101,7 +118,9 @@ function socketServicefunction (server) {
         })
 
         socket.on('disconnect', function () {
-            onlineClientQueue.remove({
+            onlineClientQueue.remove(socket.id)
+            onlineAdminQueue.remove(socket.id)
+            onlineAdminQueue.notifyAll('admin:remove-client', {
                 id: socket.id
             })
         })
