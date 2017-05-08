@@ -12,27 +12,29 @@ const adminToken = require('./server/service/token-service')
 const socketService = require('./server/service/socket-service')
 const indexRouter = require('./server/routers/index')
 
-function checkToken (token) {
-    if (!token || !adminToken.check(token)) return true
+function isInvalidToken (token) {
+    if (!token || !adminToken.check(token)) {
+        console.log(adminToken, token)
+        return true
+    }
     return false
 }
 
 socketService({
     server,
-    checkToken
+    isInvalidToken
 })
 
 router.get('/api/token/gen', (req, res) => {
-    if (req.query.auth !== 'awe') return res.status(400).send({ message: 'invalid auth key' })
-
+    const query = req.query
+    if (query.auth !== 'awe') return res.status(400).send({ message: 'invalid auth key' })
+    if (query.link) {
+        return res.redirect('/?_sync_console_show=true&_sync_console_token=' + adminToken.add())
+    }
     res.send({
         token: adminToken.add()
     })
 })
-
-// router.get('/', (req, res) => {
-//     res.send('sync-console-server')
-// })
 
 // router mount
 const routerMount = require('./server/mount')

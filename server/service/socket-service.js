@@ -28,12 +28,13 @@ class clientQueue {
 
     notifyAll (key, value) {
         this.queue.map(item => {
+            console.log('notifyAll', item.id, key)
             this.server.to(item.id).emit(key, value)
         })
     }
 }
 
-module.exports = function socketService ({ server, checkToken }) {
+module.exports = function socketService ({ server, isInvalidToken }) {
     const SocketIO = require('socket.io')(server)
     const syncConsole = SocketIO.of('/sync-console')
 
@@ -59,12 +60,15 @@ module.exports = function socketService ({ server, checkToken }) {
         })
 
         socket.on('admin:init-req', data => {
-            if (checkToken(data.token)) return console.log('admin:init-req  unauth user is not admin')
+            if (isInvalidToken(data.token)) return console.log('admin:init-req  unauth user is not admin')
+            onlineAdminQueue.add({
+                id: socket.id
+            })
             socket.emit('admin:init-res', onlineClientQueue.queue)
         })
 
         socket.on('admin:sync-req', data => {
-            if (checkToken(data.token)) return console.log('admin:sync-req unauth user is not admin')
+            if (isInvalidToken(data.token)) return console.log('admin:sync-req unauth user is not admin')
             const target = data.target
             syncConsole.to(target).emit('client:sync-req', {
                 target: socket.id
@@ -72,7 +76,7 @@ module.exports = function socketService ({ server, checkToken }) {
         })
 
         socket.on('admin:run-code', data => {
-            if (checkToken(data.token)) return console.log('admin:run-code unauth user is not admin')
+            if (isInvalidToken(data.token)) return console.log('admin:run-code unauth user is not admin')
             const target = data.target
             syncConsole.to(target).emit('client:run-code', {
                 code: data.code

@@ -2,7 +2,7 @@
 
 const adminToken = {
     keys: {},
-    alive: 1000 * 60 * 15,
+    alive: 1000 * 60 * 60,
     check: function (token) {
         return this.keys[token]
     },
