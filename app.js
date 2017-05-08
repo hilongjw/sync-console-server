@@ -3,7 +3,7 @@ const express = require('express')
 const path = require('path')
 
 const NODE_ENV = process.env.NODE_ENV || 'production'
-const PORT = NODE_ENV === 'development' ? 9999 : 80
+const PORT = 9999
 const app = express()
 const router = express.Router()
 const server = http.createServer(app)
