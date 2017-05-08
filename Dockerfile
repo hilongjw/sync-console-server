@@ -8,4 +8,4 @@ RUN npm install --production
 
 EXPOSE 9999
 
-ENTRYPOINT node bench/app.js
+ENTRYPOINT npm start
