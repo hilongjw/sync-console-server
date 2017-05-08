@@ -8,5 +8,5 @@ var syncConsoleManager = new window.SyncConsole.default({
     // for sync console
     // project: 'some IM',
     maxLogCount: 50,
-    server: '/' // 'http://sync.bood.in/',
+    server: 'http://sync.bood.in/',
 })
