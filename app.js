@@ -8,6 +8,11 @@ const app = express()
 const router = express.Router()
 const server = http.createServer(app)
 
+if (NODE_ENV === 'production') {
+    const Raven = require('raven')
+    Raven.config('http://01c5a6399a49482fb7166558f96c545c:672f558793d24a8ab2b87423f3054391@sentry2.luojilab.com/8').install()
+}
+
 const adminToken = require('./server/service/token-service')
 const socketService = require('./server/service/socket-service')
 const indexRouter = require('./server/routers/index')

@@ -11,7 +11,7 @@ const adminToken = {
         this.keys[token] = true
 
         setTimeout(() => {
-            this.keys[token] = undefined
+            delete this.keys[token]
         }, this.alive)
 
         return token
