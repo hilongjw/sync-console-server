@@ -4,7 +4,7 @@
     el.setAttribute('style', 'height: 20px; width: 20px; background: red;')
     document.body.appendChild(el)
 
-    var syncConsoleManager = new window.SyncConsole.default({
+    var syncConsoleManager = new window.SyncConsoleManager({
         el: '#ddd',
         // for sync console
         // project: 'some IM',
