@@ -1,8 +1,13 @@
-# SyncConsole-server
+# SyncConsole Server
+
+## preview
+
+
+
 
 ## demo
 
-[https://sync-console-server-rucenergcw.now.sh](https://sync-console-server-rucenergcw.now.sh)
+[http://sync.bood.in](http://sync.bood.in/?_sync_console_show=true)
 
 generate token
 

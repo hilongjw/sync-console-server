@@ -9,7 +9,7 @@ class clientQueue {
     add (item) {
         for (let i = 0, len = this.queue.length; i < len; i++) {
             if (this.queue[i].id === item.id) {
-                return console.log('not add-client')
+                return
             }
         }
 
@@ -46,6 +46,7 @@ module.exports = function socketService ({ server, isInvalidToken }) {
     })
 
     syncConsole.on('connection', function (socket) {
+
         socket.on('client:init', data => {
             onlineClientQueue.add({
                 id: socket.id,
@@ -89,11 +90,13 @@ module.exports = function socketService ({ server, isInvalidToken }) {
             })
         })
 
-        socket.on('client:sync-update', (data) => {
+        function syncUpdateData (data) {
             syncConsole.to(data.target).emit('admin:sync-update', {
                 data: data.data
             })
-        })
+        }
+
+        socket.on('client:sync-update', syncUpdateData)
 
         socket.on('disconnect', function () {
             onlineClientQueue.remove(socket.id)
