@@ -7,7 +7,7 @@
     var syncConsoleManager = new window.SyncConsoleManager({
         el: '#ddd',
         // for sync console
-        // project: 'some IM',
+        project: 'im',
         maxLogCount: 50,
         server: 'http://sync.bood.in/',
     })

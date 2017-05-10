@@ -1,7 +1,9 @@
 'use strict'
 
 const adminToken = {
-    keys: {},
+    keys: {
+        test: true
+    },
     alive: 1000 * 60 * 60,
     check: function (token) {
         return this.keys[token]

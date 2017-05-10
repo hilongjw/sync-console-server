@@ -34,6 +34,12 @@ class clientQueue {
     }
 }
 
+function errorHelper (socket, message) {
+    socket.emit('client:error', {
+        message: message
+    })
+}
+
 module.exports = function socketService ({ server, isInvalidToken }) {
     const SocketIO = require('socket.io')(server)
     const syncConsole = SocketIO.of('/sync-console')
@@ -48,28 +54,27 @@ module.exports = function socketService ({ server, isInvalidToken }) {
     syncConsole.on('connection', function (socket) {
 
         socket.on('client:init', data => {
-            onlineClientQueue.add({
+            const clientData = {
                 id: socket.id,
                 system: data.system,
                 project: data.project
-            })
-            onlineAdminQueue.notifyAll('admin:add-client', {
-                id: socket.id,
-                system: data.system,
-                project: data.data
-            })
+            }
+
+            onlineClientQueue.add(clientData)
+            onlineAdminQueue.notifyAll('admin:add-client', clientData)
         })
 
         socket.on('admin:init-req', data => {
-            if (isInvalidToken(data.token)) return console.log('admin:init-req  unauth user is not admin')
+            if (isInvalidToken(data.token)) return errorHelper(socket, 'admin:init-req  unauth user is not admin')
             onlineAdminQueue.add({
                 id: socket.id
             })
-            socket.emit('admin:init-res', onlineClientQueue.queue)
+            onlineClientQueue.remove(socket.id)
+            socket.emit('admin:init-res', onlineClientQueue.queue.filter(item => item.project === data.project))
         })
 
         socket.on('admin:sync-req', data => {
-            if (isInvalidToken(data.token)) return console.log('admin:sync-req unauth user is not admin')
+            if (isInvalidToken(data.token)) return errorHelper(socket, 'admin:sync-req unauth user is not admin')
             const target = data.target
             syncConsole.to(target).emit('client:sync-req', {
                 target: socket.id
@@ -77,7 +82,7 @@ module.exports = function socketService ({ server, isInvalidToken }) {
         })
 
         socket.on('admin:run-code', data => {
-            if (isInvalidToken(data.token)) return console.log('admin:run-code unauth user is not admin')
+            if (isInvalidToken(data.token)) return errorHelper(socket, 'admin:run-code unauth user is not admin')
             const target = data.target
             syncConsole.to(target).emit('client:run-code', {
                 code: data.code
