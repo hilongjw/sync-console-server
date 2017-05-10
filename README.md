@@ -1,27 +1,34 @@
 # SyncConsole Server
 
-## preview
+## Preview
 
 
 
 
-## demo
+## Demo
 
-[http://sync.bood.in](http://sync.bood.in/?_sync_console_show=true)
+[http://sync.bood.in](http://sync.bood.in/?_sync_console_show=true&_sync_console_token=test&_sync_console_project=im)
 
-generate token
+## Install
 
+```html
+<script src="path/to/sync-console.js"></script>
+<script>
+var syncConsoleManager = new SyncConsoleManager({
+    project: 'im',
+    maxLogCount: 50,
+    server: 'http://sync.bood.in/',
+})
+</script>
 ```
-{"token":"1b1ef1ba-aadb-406f-bc64-b8d30b0de649"}
-```
 
-open syncconsole dashbroad
 
-```
-/?_sync_console_show=true&_sync_console_token=1b1ef1ba-aadb-406f-bc64-b8d30b0de649
-```
+## url query options
 
-choose a remote browser client and debug with it
+- _sync_console_show 
+- _sync_console_token
+- _sync_console_project
+
 
 
 
