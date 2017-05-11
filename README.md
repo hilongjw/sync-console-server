@@ -28,6 +28,7 @@ var syncConsoleManager = new SyncConsoleManager({
 - _sync_console_show 
 - _sync_console_token
 - _sync_console_project
+- _sync_console_remote
 
 
 
