@@ -30,6 +30,11 @@ socketService({
     isInvalidToken
 })
 
+router.get('/_docker_healthcheck', (req, res) => {
+    // console.log('health checking')
+    res.send('') 
+})
+
 router.get('/api/token/gen', (req, res) => {
     const query = req.query
     if (query.auth !== 'awe') return res.status(400).send({ message: 'invalid auth key' })
