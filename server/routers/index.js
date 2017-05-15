@@ -1,7 +1,7 @@
 'use strict'
 
 const render = require('../utils/render')
-const appConfig = require('./config')
+const appConfig = require('../../config')
 
 function index (req, res) {
     res.send(render('index',
