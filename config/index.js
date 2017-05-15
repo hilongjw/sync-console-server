@@ -24,6 +24,6 @@ const configMap = {
     }
 }
 
-const currentConfig = configMap[env] || configMap.production
+const currentConfig = configMap[NODE_ENV] || configMap.production
 
 module.exports = currentConfig
