@@ -19,7 +19,7 @@
                     SyncConsole
                 </h1>
                 <p>
-                    SyncConsole is part of the <a class="intro-card-link" href="https://fd.igetget.com">Foundation</a> project for real-time remote debugging on the mobile or PC side, viewing console logs, network requests and browser side info.
+                    SyncConsole is a part of the <a class="intro-card-link" href="https://fd.igetget.com">Foundation</a> project for real-time remote debugging on the mobile or PC side, with which developers can view console logs, network requests and browser side info in user's browser.
                 </p>
             </div>
         </section>
