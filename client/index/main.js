@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.runtime.min.js'
 import App from './App.vue'
 import './style/index.css'
 
@@ -9,3 +9,5 @@ const app = new Vue({
         App
     }
 })
+
+export default app

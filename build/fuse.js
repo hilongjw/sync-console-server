@@ -11,7 +11,7 @@ const {
 
 const NODE_ENV = process.env.NODE_ENV || 'production'
 
-const fuse = FuseBox.init({
+const fuseConfig = {
     homeDir: path.resolve(__dirname, '../client'),
     output: path.resolve(__dirname, '../static/client/$name.js'),
     plugins: [
@@ -32,10 +32,15 @@ const fuse = FuseBox.init({
             }
         })
     ]
-})
+}
+
+if (NODE_ENV !== 'development') {
+    fuseConfig.plugins.push(UglifyJSPlugin())
+}
+
+const fuse = FuseBox.init(fuseConfig)
 
 if (NODE_ENV === 'development') {
-    console.log('development mode')
     fuse.dev({
         port: 9998,
         httpServer: false
