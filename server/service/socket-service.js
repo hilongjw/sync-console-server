@@ -76,6 +76,19 @@ module.exports = function socketService ({ server, isInvalidToken }) {
         socket.on('admin:sync-req', data => {
             if (isInvalidToken(data.token)) return errorHelper(socket, 'admin:sync-req unauth user is not admin')
             const target = data.target
+
+            const client = onlineClientQueue.queue.find(c => c.id === target)
+
+            if (client) {
+                socket.emit('client:success', {
+                    message: 'choose client success'
+                })
+            } else {
+                socket.emit('client:error', {
+                    message: 'can\'t find this target'
+                })
+            }
+            
             syncConsole.to(target).emit('client:sync-req', {
                 target: socket.id
             })
