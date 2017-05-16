@@ -11,6 +11,8 @@ const server = http.createServer(app)
 if (NODE_ENV === 'production') {
     const Raven = require('raven')
     Raven.config('http://01c5a6399a49482fb7166558f96c545c:672f558793d24a8ab2b87423f3054391@sentry2.luojilab.com/8').install()
+} else if (NODE_ENV === 'development') {
+    const fuse = require('./build/fuse')
 }
 
 const Config = require('./config')
