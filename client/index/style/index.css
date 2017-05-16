@@ -108,6 +108,13 @@ body {
     height: 580px;
     -webkit-font-smoothing: antialiased;
 }
+.intro-card-link {
+    color: #fff;
+    text-decoration: none;
+}
+.intro-card-link:hover {
+    text-decoration: initial;
+}
 .intro-card {
     max-width: 600px;
 }

@@ -3,11 +3,11 @@
         <header class="view-header">
             <div class="view-header-container container-lg">
                 <div class="logo">
-                    Foundation SyncConsole
+                    SyncConsole
                 </div>
                 <ul class="hd-nav-root">
                     <li class="hd-nav-item">
-                        <a href="/dash/#/login">Sign in</a>
+                        <a href="https://fd.igetget.com/dash/#/login">Sign in</a>
                     </li>
                 </ul>
             </div>
@@ -16,10 +16,10 @@
         <section id="intro" class="view-block">
             <div class="intro-card">
                 <h1>
-                    FE foundation
+                    SyncConsole
                 </h1>
                 <p>
-                    Foundation is a front-end infrastructure project platform, we provide front-end engineers a number of automated front-end tools to improve development efficiency.
+                    SyncConsole is part of the <a class="intro-card-link" href="https://fd.igetget.com">Foundation</a> project for real-time remote debugging on the mobile or PC side, viewing console logs, network requests and browser side info.
                 </p>
             </div>
         </section>
