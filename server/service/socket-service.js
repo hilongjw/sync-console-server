@@ -14,7 +14,7 @@ class clientQueue {
         }
 
         this.queue.push(item)
-        console.log('add-client')
+        console.log('Client connected')
     }
 
     remove (id) {
@@ -23,7 +23,7 @@ class clientQueue {
                 return this.queue.splice(i, 1)
             }
         }
-        console.log('remove-client', this.queue.length)
+        console.log('Connection closed', this.queue.length)
     }
 
     notifyAll (key, value) {
