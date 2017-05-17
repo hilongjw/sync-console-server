@@ -17,8 +17,8 @@ const fuseConfig = {
     homeDir: path.resolve(__dirname, '../client'),
     output: path.resolve(__dirname, '../static/client/$name.js'),
     plugins: [
-        // VueHandler(),
-        VuePlugin(),
+        VueHandler(),
+        // VuePlugin(),
         EnvPlugin({
             NODE_ENV: NODE_ENV
         }),
@@ -28,9 +28,9 @@ const fuseConfig = {
         BabelPlugin({
             config: {
                 sourceMaps: true,
-                presets: ["es2015"],
+                presets: ['es2015'],
                 plugins: [
-                    ["transform-react-jsx"]
+                    ['transform-react-jsx']
                 ]
             }
         })
