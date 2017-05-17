@@ -7,7 +7,9 @@ const {
     CSSPlugin,
     UglifyJSPlugin,
     EnvPlugin
-} = require("fuse-box")
+} = require('fuse-box')
+
+const VueHandler = require('./vue-plugin')
 
 const NODE_ENV = process.env.NODE_ENV || 'production'
 
@@ -15,6 +17,7 @@ const fuseConfig = {
     homeDir: path.resolve(__dirname, '../client'),
     output: path.resolve(__dirname, '../static/client/$name.js'),
     plugins: [
+        // VueHandler(),
         VuePlugin(),
         EnvPlugin({
             NODE_ENV: NODE_ENV
