@@ -14,6 +14,23 @@ var syncConsoleManager = new SyncConsoleManager({
 </script>
 ```
 
+```bash
+
+npm i sync-console --save-dev
+
+```
+
+```javascript
+import Vue from 'vue'
+import SyncConsoleManager from 'sync-console'
+
+var syncConsoleManager = new SyncConsoleManager({
+    project: 'some_project_name',
+    server: 'https://sync-console-fe.luojilab.com/',
+    Vue: Vue
+})
+```
+
 ## 使用
 
 ### 客户端
