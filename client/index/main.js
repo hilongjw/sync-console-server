@@ -19,7 +19,7 @@ const app = new Vue({
             // for sync console
             project: 'im',
             maxLogCount: 50,
-            server: 'http://sync-console-fe.luojilab.com:18000/',
+            server: 'http://127.0.0.1:9999' //'http://sync-console-fe.luojilab.com:18000/',
         })
     }
 })
