@@ -1,7 +1,11 @@
 'use strict'
 
+const NODE_ENV = process.env.NODE_ENV || 'production'
+
 const adminToken = {
-    keys: {},
+    keys: {
+        test: NODE_ENV === 'development'
+    },
     alive: 1000 * 60 * 60,
     check: function (token) {
         return this.keys[token]

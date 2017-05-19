@@ -1,10 +1,13 @@
 FROM mhart/alpine-node:7.10.0
 MAINTAINER Awe <hilongjw@gmail.com>
 
-WORKDIR /
-COPY . .
+WORKDIR /data/src
+
+COPY package.json package.json
 
 RUN npm install --production
+
+COPY . /data/src
 
 ## HEALTHCHECK
 
@@ -14,7 +17,6 @@ RUN npm install --production
 
 # HEALTHCHECK --interval=5s --timeout=3s \
 #   CMD curl -fs http://localhost:9999/_docker_healthcheck || exit 1
-
 
 EXPOSE 9999
 

@@ -102,6 +102,7 @@ class VueLoader {
                         context.emitJavascriptHotReload(file)
                         context.cache.writeStaticCache(file, file.sourceMap)
                     }
+                    console.log(context)
                     return true
                 }).catch(err => {
                     console.error(err)
