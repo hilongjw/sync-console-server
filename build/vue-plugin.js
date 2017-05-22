@@ -6,12 +6,18 @@ function toFunction (code) {
 }
 
 function injectStyle (content) {
+    content = minifyContents(content)
+
     return `(function injectStyle () {
         var el = document.createElement('style');
         el.type = 'text/css';
-        el.innerHTML = "${content.replace(/\n/g, '')}";
+        el.innerHTML = "${content}";
         document.getElementsByTagName('head')[0].appendChild(el);
     })();`
+}
+
+function minifyContents (contents) {
+    return contents.replace(/\s{2,}/g, " ").replace(/\t|\r|\n/g, "").trim()
 }
 
 function compileTemplateContent (context, engine, content) {
@@ -102,7 +108,6 @@ class VueLoader {
                         context.emitJavascriptHotReload(file)
                         context.cache.writeStaticCache(file, file.sourceMap)
                     }
-                    console.log(context)
                     return true
                 }).catch(err => {
                     console.error(err)

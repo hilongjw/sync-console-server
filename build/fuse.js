@@ -10,7 +10,7 @@ const {
 } = require('fuse-box')
 
 const VueHandler = require('./vue-plugin')
-
+const test = require('./test-plugin')
 const NODE_ENV = process.env.NODE_ENV || 'production'
 
 const fuseConfig = {
@@ -18,6 +18,7 @@ const fuseConfig = {
     output: path.resolve(__dirname, '../static/client/$name.js'),
     plugins: [
         VueHandler(),
+        // test(),
         // VuePlugin(),
         EnvPlugin({
             NODE_ENV: NODE_ENV
