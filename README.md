@@ -8,8 +8,7 @@
 
 <script>
 var syncConsoleManager = new SyncConsoleManager({
-    project: 'some_project_name',
-    server: 'https://sync-console-fe.luojilab.com/'
+    project: 'some_project_name'
 })
 </script>
 ```
@@ -26,7 +25,6 @@ import SyncConsoleManager from 'sync-console'
 
 var syncConsoleManager = new SyncConsoleManager({
     project: 'some_project_name',
-    server: 'https://sync-console-fe.luojilab.com/',
     Vue: Vue
 })
 ```
